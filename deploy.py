@@ -18,11 +18,14 @@ FEATURES = ['Pclass', 'Sex', 'SibSp', 'Parch', 'Fare', 'Age_cut', 'family',
 @app.route('/predict_survived')
 def predict_survived():
     keys = []
+    count = 0
     for f in FEATURES:
         try:
             keys.append(float(request.args.get(f)))
+            count+=1
         except TypeError:
-            return f'No valid arguments, you should return value for {list(FEATURES)}'
+            return f'No valid arguments, you should return value for {list(FEATURES)}. ' \
+                   f'\n{len(FEATURES)-count} arguments missing'
 
     data = pd.DataFrame(np.array(keys).reshape(1, -1))
     data.columns = FEATURES
