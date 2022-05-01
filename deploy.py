@@ -30,7 +30,10 @@ def predict_survived():
     data = pd.DataFrame(np.array(keys).reshape(1, -1))
     data.columns = FEATURES
     y_pred_api = CLF.predict(data)
-    return f'{int(y_pred_api)}'
+    if y_pred_api == 0:
+        return "this person is more likely to die"
+    else:
+        return "this person is more likely to survive"
 
 
 if __name__ == '__main__':
